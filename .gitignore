@@ -1,0 +1,20 @@
+# OS/system files
+.DS_Store
+Thumbs.db
+
+# Archives
+*.zip
+*.7z
+*.tar
+*.gz
+
+# Logs
+*.log
+
+# PowerShell generated files
+*.ps1xml
+*.psd1
+*.psm1
+
+# Selenium/driver artifacts (if accidentally copied into repo)
+chromedriver*.exe
