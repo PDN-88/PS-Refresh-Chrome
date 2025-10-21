@@ -208,6 +208,26 @@ try {
     $options.AddArgument('--headless=new')
     $options.AddArgument('--window-size=1920,1080')
   }
+
+  # Establecer valores por defecto para reutilizar sesión si no se proporcionan
+  try {
+    if (-not $UserDataDir) {
+      $defaultUD = Join-Path $env:LOCALAPPDATA 'Google\Chrome\User Data'
+      if (Test-Path $defaultUD) {
+        $UserDataDir = $defaultUD
+        Write-Verbose "Usando UserDataDir por defecto: $UserDataDir"
+      }
+    }
+    if (-not $ProfileDirectory -and $UserDataDir) {
+      $candidateProfile = 'Default'
+      $candidatePath = Join-Path $UserDataDir $candidateProfile
+      if (Test-Path $candidatePath) {
+        $ProfileDirectory = $candidateProfile
+        Write-Verbose "Usando ProfileDirectory por defecto: $ProfileDirectory"
+      }
+    }
+  } catch {}
+
   if ($UserDataDir) { $options.AddArgument("--user-data-dir=$UserDataDir") }
   if ($ProfileDirectory) { $options.AddArgument("--profile-directory=$ProfileDirectory") }
 
